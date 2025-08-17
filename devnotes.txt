@@ -1,0 +1,61 @@
+will be focusing on the backend and the mor epolished flow of the system
+created a superadmin first para matest lahat ng functionalities in one thing 
+  
+papagawa kay doribels
+  - ui ng student registration
+  - ano anong data yung need makita ng each user (na may sariling portal) sa sarili nilang dashboards?
+  - tapusin yung index.php footer
+  - tapusin yung index.php na part na sinasabi anong courses inooffer nila, and what time sila bukas
+    - use format ng cards available within the page
+
+need ko gawin HATDOG HAHAHAHA
+  - superadmin
+    - dashboard
+    - admin portal
+      - dashboard
+      - staff (CRUD)
+      - faculty (CRUD)
+      - departments (CRUD)
+      - queue (CRUD)
+    - registrar portal
+      - dashboard
+      - applications (RU)
+        - automatically checks records
+      - pre-enrollments (RU)
+        - print
+    - treasury portal
+      - dashboard
+      - payments (CRUD)
+        - automatically checks for acocuntaabilities
+      - queue (CRUD)
+    - admissions portal
+      - dashboard
+      - requirements (R)
+    - student portal
+      - dashboard
+      - enrollment (CRU)
+      - accountabilities (R)
+    - college dept head portal
+      - dashboard
+      - curriculum
+      - sections (CRUD)
+      - subject_schdeules (CRUD)
+  - //// admin login
+  - applicant login
+  - employeen login 
+  - student login
+  - add slots for each subject_shcedule (diff from subjects, which is for curriculum)
+  - //// accounts for each portal
+  - forgot password
+  - //// log out
+  - who creates the queue elements?
+
+- paganahin registration of applicants
+- paganahin logging in of applicants (surname as password)
+- paganahin yung registrar to accept applications
+- paganahin yung application status
+- college dept head for creating curriculum, sections and subject_schdeules
+- student portal to pre-enrollment + acocuntabilities
+- registrar to approve pre-enrollments + check for accountabilities
+- admin portal for queues
+- treasury portal for paytments + check for accountrabiltiies and quweue

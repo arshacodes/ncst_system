@@ -1,0 +1,79 @@
+:root {
+  --sidebar-width: 16rem;
+  --sidebar-collapsed-width: 4rem;
+}
+@font-face {
+  font-family: 'CalSans';
+  src: url(../assets/fonts/CalSans-Regular.ttf);
+}
+.calsans {
+  font-family: 'CalSans';
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(../assets/fonts/Poppins-Light.ttf);
+}
+body {
+  font-family: 'Poppins';
+}
+@keyframes rotate-up { from {transform:rotate(0)} to {transform:rotate(180deg)} }
+@keyframes rotate-down { from {transform:rotate(180deg)} to {transform:rotate(0)} }
+#sidebar { transition: width .2s ease, transform .2s ease; }
+#content { transition: margin-left .2s ease; }
+@media (max-width: 767px) {
+  #sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    transform: translateX(-100%);
+    z-index: 20;
+  }
+  body:not(.sidebar-collapsed) #sidebar {
+    transform: translateX(0);
+  }
+  #content {
+    margin-left: 0;
+  }
+  body:not(.sidebar-collapsed) #menu-btn svg {
+    transform: rotate(180deg);
+  }
+  body:not(.sidebar-collapsed) .label,
+  body:not(.sidebar-collapsed) .logo-text {
+    display: inline-block !important;
+  }
+}
+@media (min-width: 768px) {
+  #sidebar {
+    position: relative;
+    width: var(--sidebar-width);
+    transform: translateX(0);
+    flex-shrink: 0;
+  }
+  body.sidebar-collapsed #sidebar {
+    width: var(--sidebar-collapsed-width);
+  }
+  body.sidebar-collapsed #logo,
+  body.sidebar-collapsed .logo-text,
+  body.sidebar-collapsed .label {
+    display: none;
+  }
+  body.sidebar-collapsed #sidebar-header {
+    justify-content: center;
+  }
+  body.sidebar-collapsed nav a {
+    justify-content: center;
+  }
+  #toggle-btn svg {
+    animation-duration: .3s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+  }
+  body.sidebar-collapsed #toggle-btn svg {
+    animation-name: rotate-up;
+  }
+  body:not(.sidebar-collapsed) #toggle-btn svg {
+    animation-name: rotate-down;
+  }
+}

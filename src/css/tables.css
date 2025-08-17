@@ -1,0 +1,27 @@
+/* Override default DataTables striping */
+table.dataTable tbody tr:nth-child(odd) {
+  background-color: oklch(96.2% 0.018 272.314); /* light gray */
+}
+
+table.dataTable tbody tr:nth-child(even) {
+  background-color: #ffffff; /* white */
+}
+
+table.dataTable tbody tr:hover {
+  background-color: oklch(96.2% 0.018 272.314); /* light gray */
+}
+
+table.dataTable td {
+  width:fit-content
+}
+
+/* tables.css */
+.dataTables_scrollHeadInner,
+.dataTables_scrollBody table {
+  width: 100% !important;
+}
+.dataTables_scrollHead table {
+  width: 100% !important;
+  table-layout: fixed;    /* evenly distributes columns */
+}
+
