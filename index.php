@@ -72,7 +72,7 @@ $portals = [
     'title'      => 'Admissions Portal',
     'subtitle'   => 'Become a Nation Builder',
     'image'      => 'src/assets/img/registration.png',
-    'link'       => '/ncst_system/admissions.php',
+    'link'       => '/ncst_system/admissions_login.php',
     'buttonText' => 'Go to Admissions',
   ],
   [
@@ -340,7 +340,113 @@ $portals = [
         <?php endforeach; ?>
       </div>
     </section>
+    <div class="font-sans text-[#1a1a1a]" id="admission">
+      <div class="min-h-screen flex items-center justify-center px-4 py-8">
+        <div class="bg-white/80 w-full max-w-6xl p-6 md:p-10 rounded-md shadow-lg">
+        
+          <h1 class="text-center text-2xl md:text-3xl font-bold text-blue-900 mb-4">
+            NCST Educational System
+          </h1>
 
+        
+          <div class="flex flex-col md:flex-row justify-between items-start gap-6">
+      
+            <div class="w-full md:w-1/2 space-y-4 text-center my-auto">
+              <h2 class="text-yellow-500 font-bold text-lg">
+                COLLEGE ENROLLMENT <br /> ARE NOW OPEN!
+              </h2>
+              <div>
+                <p class="font-bold">MONDAY - FRIDAY</p>
+                <p>8:00 AM – 5:00 PM</p>
+              </div>
+              <div>
+                <p class="font-bold">SATURDAY</p>
+                <p>8:00 AM – 5:00 PM</p>
+              </div>
+            </div>
+
+            <div class="hidden md:block w-px bg-black h-60 mx-4 my-auto"></div>
+
+        
+            <div class="w-full md:w-1/2 space-y-2 text-center my-auto">
+              <p>
+                Enrollment for the 1st Semester, A.Y. 2025–2026<br />
+                is now ONGOING for the following programs:
+              </p>
+
+              <div class="mt-4">
+                <p class="font-bold">ARCHITECTURE DEPARTMENT</p>
+                <p class="ml-4">BS in Architecture</p>
+              </div>
+
+              <div class="mt-4">
+                <p class="font-bold">CRIMINAL JUSTICE DEPARTMENT</p>
+                <p class="ml-4">BS in Criminology (BSCRIM)</p>
+                <p class="ml-4">BS in Public Administration (BSPA)</p>
+              </div>
+
+              <div class="mt-4">
+                <p class="font-bold">COMPUTER STUDIES DEPARTMENT</p>
+                <p class="ml-4">BS in Information Technology (BSIT)</p>
+                <p class="ml-4">BS in Computer Science (BSCS)</p>
+                <p class="ml-4">Associate in Computer Technology (ACT)</p>
+              </div>
+            </div>
+          </div>
+
+        
+          <div class="mt-8 grid grid-cols-2 md:grid-cols-4 text-center font-bold text-sm">
+            <div class="bg-white py-2">MAKADIYOS</div>
+            <div class="bg-blue-800 text-white py-2">MAKABAYAN</div>
+            <div class="bg-red-600 text-white py-2">MAKATAO</div>
+            <div class="bg-yellow-400 py-2">MAKAKALIKASAN</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--FOOTER, SOCIALS & BOTTOM LINE-->
+
+    <footer class="bg-[#1c2a7c] text-white pt-16 pb-0">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10">
+
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+              <img src="img/NCST-Edu.png" alt="NCST Logo" class="h-12" />
+          </div>
+          <p class="text-gray-300 leading-relaxed mb-6">
+            The National College of Science and Technology (NCST) is one of the leading educational institutions in the vast growing locality of Dasmariñas, Cavite.
+          </p>
+          <div class="flex space-x-4 mt-6">
+            <a href="https://www.facebook.com/NCST.OfficialPage" class="text-white hover:text-yellow-400 text-xl"><i class="ri-facebook-fill"></i></a>
+            <div class="hidden md:block w-px bg-black h-5 mx-4 my-auto"></div>
+            <a href="https://linkedin.com/in/ncstofficial?fbclid=IwZXh0bgNhZW0CMTAAAR3OxDI99Dsfd6Ag4TnITSRfkdngjdYF0kyQ4LTqaR1URFCGKlzvcKlo9Os_aem_-w5d6tm9VTVlNTd2ZWu8TQ" class="text-white hover:text-yellow-400 text-xl"><i class="ri-linkedin-fill"></i></a>
+            <a href="https://x.com/NCSTOFFICIAL?fbclid=IwZXh0bgNhZW0CMTAAAR0nQi0_JtReFv63kZaQObp-6V_Xfk0tzNRjjDkx7mhOZ6gextXe3wvJuVM_aem_GMFx4WmkJJU4PjEvQZDEUQ" class="text-white hover:text-yellow-400 text-xl"><i class="ri-twitter-fill"></i></a>
+            <a href="https://www.youtube.com/@NCSTEducationSystemChannel" class="text-white hover:text-yellow-400 text-xl"><i class="ri-youtube-fill"></i></a>
+            <a href="https://tiktok.com/@ncstofficial?fbclid=IwZXh0bgNhZW0CMTAAAR1qkZoMQx7pCsOYBo2Kp1ZTfyTNiP6obC6zA8CiQWIANKsipaxpE1q92Vg_aem_F6EvAiklYw0wUXkCYNQYJQ" class="text-white hover:text-yellow-400 text-xl"><i class="ri-tiktok-fill"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Subscribe Now</h3>
+          <p class="text-gray-300 mb-5">Don’t miss our future updates! Get Subscribed Today!</p>
+          <form class="flex w-full max-w-md">
+            <input type="email" placeholder="Your mail here" class="flex-grow px-4 py-3 rounded-l-full focus:outline-none text-black" />
+            <button type="submit" class="bg-[#f2cb05] px-5 flex items-center justify-center rounded-r-full hover:bg-yellow-500 transition duration-300">
+              <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m0 0l4 4m-4-4l4-4" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="bg-[#f2cb05] text-[#1c2a7c] mt-12 py-4 text-center font-medium tracking-wide">
+        Empowering Future Innovators — Built by NCST Developers
+      </div>
+
+
+    </footer>
 
   </div>
 

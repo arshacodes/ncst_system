@@ -13,8 +13,9 @@ need ko gawin HATDOG HAHAHAHA
     - dashboard
     - admin portal
       - dashboard
-      - staff (CRUD)
-      - faculty (CRUD)
+      - //// staff (CRUD)
+      - //// faculty (CRUD)
+      - students (CRUD)
       - departments (CRUD)
       - queue (CRUD)
     - registrar portal
