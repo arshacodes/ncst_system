@@ -1,15 +1,8 @@
 <?php
-// add_schedule.php
-// session_start();
-// if (!isset($_SESSION['user_id'])) {
-//     header('Location: login.php');
-//     exit;
-// }
 
 include 'src/db/db_conn.php';
 $deptId = (int) $_SESSION['department_id'] ?? 1;
 
-// Fetch instructors in this dept (or all if Superadmin)
 if ($deptId === 1) {
     $insSql = "SELECT id, CONCAT(f_name,' ',l_name) AS name FROM faculty_tbl";
     $instructors = $pdo->query($insSql)->fetchAll();
@@ -24,7 +17,6 @@ if ($deptId === 1) {
     $instructors = $stmt->fetchAll();
 }
 
-// Days & timeslots for selects
 $days      = $pdo->query("SELECT id,name FROM days_tbl")->fetchAll();
 $timeslots = $pdo->query("SELECT id,start_time,end_time FROM timeslots_tbl")
                   ->fetchAll();

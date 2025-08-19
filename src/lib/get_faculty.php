@@ -15,6 +15,7 @@ function getFacultyList(PDO $pdo): array
         f.f_name,
         f.m_name,
         f.l_name,
+        email,
         f.suffix,
         d.name as department_name,
         f.role,

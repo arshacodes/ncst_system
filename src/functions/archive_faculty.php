@@ -1,10 +1,12 @@
 <?php
-// archive_faculty.php
-
-require_once __DIR__ . '/../../src/db/db_conn.php';
+declare(strict_types=1);
 session_start();
 
-// Grab the ID from the query string
+$returnUrl = $_GET['return_url'] 
+    ?? ($_SERVER['HTTP_REFERER'] ?? '../../admin_portal.php');
+
+require_once __DIR__ . '/../../src/db/db_conn.php';
+
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     $_SESSION['flash'] = [
@@ -12,16 +14,16 @@ if (!$id) {
         'title' => 'Invalid Request',
         'text'  => 'No valid faculty ID provided.'
     ];
-    header('Location: ../../superadmin_portal.php');
+    header("Location: $returnUrl");
     exit;
 }
 
 try {
-    // Soft‐archive by updating the status field
-    $sql = "UPDATE faculty_tbl
-               SET status = 'Archived'
-             WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $pdo->prepare("
+        UPDATE faculty_tbl
+           SET status = 'Archived'
+         WHERE id = :id
+    ");
     $stmt->execute([':id' => $id]);
 
     if ($stmt->rowCount()) {
@@ -37,7 +39,6 @@ try {
             'text'  => 'Faculty member was already archived or not found.'
         ];
     }
-
 } catch (PDOException $e) {
     $_SESSION['flash'] = [
         'icon'  => 'error',
@@ -46,6 +47,5 @@ try {
     ];
 }
 
-// Redirect back to the faculty tab
-header('Location: ../../superadmin_portal.php');
+header("Location: $returnUrl");
 exit;

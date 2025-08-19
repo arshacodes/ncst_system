@@ -412,7 +412,7 @@ $portals = [
 
         <div>
           <div class="flex items-center space-x-3 mb-4">
-              <img src="img/NCST-Edu.png" alt="NCST Logo" class="h-12" />
+              <img src="src/assets/img/logo-2.png" alt="NCST Logo" class="h-12" />
           </div>
           <p class="text-gray-300 leading-relaxed mb-6">
             The National College of Science and Technology (NCST) is one of the leading educational institutions in the vast growing locality of Dasmariñas, Cavite.

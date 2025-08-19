@@ -36,7 +36,7 @@ $nonAcademicDepts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $userDept = $_SESSION['department_id'] ?? null;
 
-if ($userDept !== 1) {
+if ($userDept !== 2) {
     echo <<<HTML
   <!DOCTYPE html>
   <html lang="en">
@@ -95,7 +95,7 @@ function inline_icon(string $name): string {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Superadmin Access</title>
+  <title>Admin Access</title>
   <link rel="icon" href="src/assets/img/logo-1.png"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <link
@@ -171,7 +171,7 @@ function inline_icon(string $name): string {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
-        <span class="text-indigo-700 text-lg font-semibold me-2">Superadmin</span>
+        <span class="text-indigo-700 text-lg font-semibold me-2">Admin</span>
         <span class="text-gray-500 text-lg me-2">|</span>
         <span class="text-gray-500 text-xs me-2">Last login: <?= htmlspecialchars($currentTime, ENT_QUOTES, 'UTF-8') ?></span>
       </div>

@@ -1,39 +1,98 @@
 <?php
-// File: employee_login.php
 session_start();
 require_once __DIR__ . '/src/db/db_conn.php';
 
-$error    = '';
-$username = '';
+$error = '';
+$email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
+    $email    = trim($_POST['email']    ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if ($username === '' || $password === '') {
-        $error = 'Enter both username and password.';
+    if ($email === '' || $password === '') {
+        $error = 'Enter both email and password.';
     } else {
-        // Only staff members with role = 'employee'
-        $sql  = "SELECT id, username, password_hash, department_id
-                   FROM staff_tbl
-                  WHERE username = ?
-                    AND role = 'employee'
-                  LIMIT 1";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$username]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        //
+        // 1) Try Staff Login
+        //
+        $sql = "
+            SELECT
+              id,
+              email,
+              password,
+              department_id,
+              UPPER(CONCAT(SUBSTR(f_name,1,1),SUBSTR(l_name,1,1))) AS initials
+            FROM staff_tbl
+            WHERE email = ? AND status = 'Active'
+            LIMIT 1
+        ";
+        $stmt  = $pdo->prepare($sql);
+        $stmt->execute([$email]);
+        $staff = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['password_hash'])) {
+        if ($staff && password_verify($password, $staff['password'])) {
             session_regenerate_id(true);
-            $_SESSION['user_id']       = $user['id'];
-            $_SESSION['username']      = $user['username'];
-            $_SESSION['role']          = 'employee';
-            $_SESSION['department_id'] = $user['department_id'] ?? 1;
+            $_SESSION['user_id']        = $staff['id'];
+            $_SESSION['email']          = $staff['email'];
+            $_SESSION['department_id']  = $staff['department_id'];
+            $_SESSION['user_initials']  = $staff['initials'];
+            $_SESSION['user_type']      = 'staff';
 
-            header('Location: employee_portal.php');
+            // Redirect staff based on department_id
+            switch ($staff['department_id']) {
+                case 3:
+                    header('Location: registrar_portal.php');
+                    break;
+                case 4:
+                    header('Location: treasury_portal.php');
+                    break;
+                default:
+                    header('Location: staff_portal.php');
+                    break;
+            }
             exit;
         }
 
+        //
+        // 2) Fallback to Faculty Login
+        //
+        $sql = "
+            SELECT
+              id,
+              email,
+              password,
+              department_id,
+              role,
+              UPPER(CONCAT(SUBSTR(f_name,1,1),SUBSTR(l_name,1,1))) AS initials
+            FROM faculty_tbl
+            WHERE email = ? AND status = 'Active'
+            LIMIT 1
+        ";
+        $stmt   = $pdo->prepare($sql);
+        $stmt->execute([$email]);
+        $faculty = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($faculty && password_verify($password, $faculty['password'])) {
+            session_regenerate_id(true);
+            $_SESSION['user_id']        = $faculty['id'];
+            $_SESSION['email']          = $faculty['email'];
+            $_SESSION['department_id']  = $faculty['department_id'];
+            $_SESSION['user_initials']  = $faculty['initials'];
+            $_SESSION['user_type']      = 'faculty';
+            $_SESSION['role']           = $faculty['role'];
+
+            // Redirect faculty based on role
+            if ($faculty['role'] === 'Head') {
+                header('Location: dept_head_portal.php');
+            } else {
+                header('Location: faculty_portal.php');
+            }
+            exit;
+        }
+
+        //
+        // 3) Neither staff nor faculty matched
+        //
         $error = 'Invalid credentials or not authorized.';
     }
 }
@@ -41,27 +100,132 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Employee Login</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NCST Education System | Employee Login</title>
+  <link rel="icon" href="src/assets/img/logo-1.png"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+  />
+  <link rel="stylesheet" href="src/css/login.css"/>
+  <link rel="stylesheet" href="src/css/tables.css"/>
+  <script src="src/js/login.js" defer></script>
 </head>
-<body>
-  <h1>Employee Login</h1>
-  <?php if ($error): ?>
-    <div style="color:red"><?= htmlspecialchars($error) ?></div>
+<body class="flex h-screen bg-gray-100 overflow-hidden">
+  <div id="content" class="flex-1 flex flex-col overflow-auto text-sm">
+    <main
+      class="flex-1 items-center justify-center bg-gradient-to-br from-indigo-50 to-white text-sm text-gray-700"
+    >
+      <div
+        id="login"
+        class="w-full h-screen flex items-center justify-center p-6"
+      >
+        <div class="card shadow-lg rounded-lg bg-white flex flex-row max-w-2xl">
+          <!-- Left-side image -->
+          <div class="flex-1 hidden md:block">
+            <img
+              src="src/assets/img/students.jpg"
+              alt="background pattern"
+              class="w-full h-full object-cover opacity-100 rounded-l-lg
+                     [mask-image:linear-gradient(to_bottom,black,transparent)]
+                     [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]"
+            />
+          </div>
+
+          <!-- Right-side form -->
+          <div class="p-6 flex-1">
+            <div class="mb-4">
+              <img
+                src="src/assets/img/logo-2.png"
+                alt="logo"
+                class="w-16 h-16 mx-auto"
+              />
+              <p class="text-center text-lg text-indigo-700 calsans">
+                NCST
+              </p>
+              <p class="text-center text-sm text-gray-700">
+                Employee Login
+              </p>
+            </div>
+
+            <!-- Inline PHP error message -->
+            <?php if ($error): ?>
+              <div class="mb-4 text-red-600 text-xs">
+                <?= htmlspecialchars($error) ?>
+              </div>
+            <?php endif; ?>
+
+            <form method="POST" novalidate>
+              <div class="mb-4">
+                <div class="mb-2">
+                  <label
+                    for="email"
+                    class="block text-xs font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value="<?= htmlspecialchars($email) ?>"
+                    class="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm
+                           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xs"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    for="password"
+                    class="block text-xs font-medium text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    class="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm
+                           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xs"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="bg-indigo-700 text-white font-bold py-2 md:py-3 px-4 w-full rounded hover:bg-indigo-800 disabled:opacity-50"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Flash via SweetAlert2 -->
+  <?php if (!isset($noLoginFlash) && !empty($_SESSION['flash'])): ?>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      Swal.fire({
+        icon:   <?= json_encode($_SESSION['flash']['icon'])  ?>,
+        title:  <?= json_encode($_SESSION['flash']['title']) ?>,
+        text:   <?= json_encode($_SESSION['flash']['text'])  ?>,
+        timer:  2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
+    </script>
+    <?php unset($_SESSION['flash']); ?>
   <?php endif; ?>
 
-  <form method="POST">
-    <label>
-      Username:
-      <input type="text" name="username" value="<?= htmlspecialchars($username) ?>">
-    </label><br>
-
-    <label>
-      Password:
-      <input type="password" name="password">
-    </label><br>
-
-    <button type="submit">Log In</button>
-  </form>
 </body>
 </html>
+<?php
+exit;
+?>

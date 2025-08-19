@@ -19,6 +19,7 @@ function getStaffList(PDO $pdo): array
         s.m_name,
         s.suffix,
         s.l_name,
+        s.email,
         d.name AS department_name,
         s.status
       FROM staff_tbl AS s

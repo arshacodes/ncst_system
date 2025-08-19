@@ -60,3 +60,11 @@ need ko gawin HATDOG HAHAHAHA
 - registrar to approve pre-enrollments + check for accountabilities
 - admin portal for queues
 - treasury portal for paytments + check for accountrabiltiies and quweue
+
+UI notes:
+- fix index.php bottom part to be consistent with the rest of the page
+- animation in all cards
+  - login pages
+  - admissions_register.php
+-add background  in login pages
+- fix register page to make it consistent with th elogin pages deisgn
